@@ -14,4 +14,8 @@ https://twitter.com/acemarke/status/1365888195070681092
 > Stackshare and Slant are _sorta_ along the lines of what I'm describing, although I'm picturing something much more text-based and involving descriptions, examples, and use cases.
 > I'm not saying any of this would be easy, and there'd be a lot of wrangling over how to format and present this info. also, not all would be "competing libs". like, `fetch` vs `axios` vs `redaxios` vs your own fetch wrapper
 
-So, this is me sorta putting my money where my mouth is, and creating a repo to start this.  **Let's file some issues and figure out what this might look like, together!**
+So, this is me sorta putting my money where my mouth is, and creating a repo to start this.  
+
+## Initial Planning Discussion
+
+see [**Discussion #1 - Initial RFC: Scope and Goals**](https://github.com/markerikson/react-community-tools-practices-cheatsheet/discussions/1) for discussion of what this project should actually involve and how we might make it a reality.
