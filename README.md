@@ -1,4 +1,4 @@
-# React Community Tools and Practices
+# React Community Tools and Practices Cheatsheet
 
 This is a placeholder for an idea:
 
