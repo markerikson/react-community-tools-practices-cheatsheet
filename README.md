@@ -1,9 +1,6 @@
 # React Community Tools and Practices Cheatsheet
 
-This is a placeholder for an idea:
-
-https://twitter.com/acemarke/status/1365834578087333895
-https://twitter.com/acemarke/status/1365888195070681092
+This is a placeholder for an idea: (refs: https://twitter.com/acemarke/status/1365834578087333895, https://twitter.com/acemarke/status/1365888195070681092):
 
 > it feels like there maybe needs to be more of a community effort to build up some kind of a centralized "best practices" site, perhaps similar to the React+TS CheatSheet ( https://github.com/typescript-cheatsheets/react )
 > what if the community collaborated on putting together a centralized list of what the major options are in different categories, and when it might make sense to use them?  
