@@ -1,7 +1,7 @@
 module.exports = {
     title: "React Common Tools and Practices",
     tagline: "Common Tools and Practices in the React Community",
-    url: "github.com", // Should be changed to the url this is hosted at
+    url: "https://react-community-tools-practices-cheatsheet.netlify.app",
     baseUrl: "/",
     favicon: "img/favicon.ico",
     projectName: "react-community-tools-practices-cheatsheet",
