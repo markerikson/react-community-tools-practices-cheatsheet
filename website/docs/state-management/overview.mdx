@@ -1,0 +1,74 @@
+---
+id: overview
+title: "State Management: Overview"
+sidebar_label: "State Management: Overview"
+---
+
+## What is State Management?
+
+**"State" is any data that describes the current behavior of an application**.  This could include values like "a list of objects fetched from the server", "which item is currently selected", "name of the currently logged-in user", and "is this modal open?".
+
+**"State Management" is the process of dealing with changes to state over time**.  This means having ways to:
+
+- *store* an initial value
+- *read* the current value
+- *update* a value
+
+There's also typically a way to be notified when the current value has changed.
+
+React applications decide what UI to render based on the current state values.  Because of this, understanding when and how to use different techniques for managing state is a key skill for all React developers, as is the ability to decide where a given piece of state should live.
+
+
+
+## Types of State
+
+There's several ways we could categorize different kinds of state in a client-side application.  One set of categories might be:
+
+- **Data**: values that relate to specific features or business logic in the application (such as a list of todos)
+- **Control/UI state**: values related to how the user is interacting with the app (such as which todo item is currently selected)
+- **Session state**: values related to the current user (such as a username or profile)
+- **Communication state**: values that describe requests to other servers (such as a "loading" value)
+- **Location state**: values that are in the current browser URL and HTML `history` object (such as the domain, the path, query parameters, and client routing navigation history)
+
+Another set of categories might be:
+
+- **Local client state**: values that are scoped directly to a single component or its descendants
+- **Global client state**: values that are broadly needed in many places throughout an application
+- **Server state**: values that are fetched from a server via an API and cached on the client
+
+
+## State Management Tools
+
+Because state management is such a vital part of writing React applications, the React community has developed many different tools and patterns for working with state.  
+
+### React State Management
+
+React itself has several built-in APIs for managing state, including the `useState` and `useReducer` hooks for managing state inside of React components.  It also has a Context API to help with passing data down the component tree.  In many cases, React's built-in state management tools are all you'll need to build applications.
+
+Some common patterns for React state management are:
+
+- **"Lifting state up"**: since data flows down the tree as props, sibling components can't share data directly. By putting state in their nearest common ancestor component, the child components can all receive that data via props or context.
+- **"Colocating state"**: some state may only be needed in a certain subtree of the application.  It's best to keep the state stored as close as possible to where it's actually needed, which helps optimize rendering behavior.
+- **"Prop drilling"**: passing values from parents as props through many levels of nested child components, explicitly
+- **"Providers"**: React's Context API allows rendering a `<MyContext.Provider value={someValue}>` component, and nested children can read the value from that context directly without having to prop-drill. A component whose job is to store state and render a `<MyContext.Provider>` is also often referred to as a "provider component".
+
+### External State Management
+
+The React community has created many different libraries to help manage state outside of React components.  Some of the most popular libraries are:
+
+- [Redux](./redux.mdx): focuses on making state updates predictable and traceable, with inspiration from the "Flux Architecture" pattern and Functional Programming principles.  It relies on separating descriptions of "what happened", called "actions", from the logic that decides how state should be updated, called "reducer functions".  Redux centralizes global application state into a single "store", and provides browser DevTools to view the history of state changes over time.
+- [Mobx](./mobx.mdx): applies concepts from Functional Reactive Programming and Object-Oriented design to automatically track changes to state and propagate updates.  Mobx lets you create individual "store" classes and mark specific fields as "observable", then mark React components and other logic as "observers".  You can directly modify those observables fields in your code, and Mox will transparently update any observer code that depends on those fields.
+- [XState](./xstate.mdx): builds on time-tested Computer Science patterns for defining and executing Finite State Machines and Statecharts, including interacting between those machines using the Actor Model.  XState enables defining specific known possible states for a system, how different events cause transitions between those states, and what side effects are executed as a result. It has the ability to visualize state machines and their transitions graphically.
+
+
+## Data Fetching and Caching
+
+There is overlap between the ideas of "managing state" and "caching fetched data from the server".  For example, you can use a state management tool like Mobx or Redux to track loading state and cache the fetched data, although they are not purpose-built for that use case.  There are also tools that _are_ specifically designed to abstract the use case of fetching data, caching it, and managing the loading state and cached data internally without needing to write that code yourself.  
+
+See [Data Fetching and Caching: Overview](../data-fetching-caching/overview.mdx) for discussion of concepts and tools for that category.
+
+
+## Further Information
+
+- [The 5 Types of React Application State](http://jamesknelson.com/5-types-react-application-state/)
+

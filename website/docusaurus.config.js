@@ -97,7 +97,7 @@ module.exports = {
                     path: "./docs",
                     routeBasePath: "/",
                     include: [
-                        "{common-mistakes,glossary,how-to,state-management,use-cases}/*.{md,mdx}",
+                        "**/*.{md,mdx}",
                     ],
                     sidebarPath: require.resolve("./sidebars.js"),
                 },
