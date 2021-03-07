@@ -29,11 +29,10 @@ module.exports = {
                     position: "right",
                 },
                 {
-                    to: "/state-management/state-management",
+                    to: "/state-management/overview",
                     label: "State Management",
                     position: "right",
-                },
-                { to: "/how-to/how-to", label: "How To..", position: "right" },
+                }
             ],
         },
         footer: {
@@ -57,7 +56,7 @@ module.exports = {
                         },
                         {
                             label: "State Management",
-                            to: "/state-management/state-management",
+                            to: "/state-management/overview",
                         },
                         {
                             label: "How To",
