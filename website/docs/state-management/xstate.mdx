@@ -6,20 +6,64 @@ sidebar_label: "XState"
 
 ## Description
 
-XState builds on time-tested Computer Science patterns for defining and executing Finite State Machines and Statecharts, including interacting between those machines using the Actor Model.  XState enables defining specific known possible states for a system, how different events cause transitions between those states, and what side effects are executed as a result. It has the ability to visualize state machines and their transitions graphically.
+XState is a state orchestration library for implementing finite-state machines, statecharts, and the actor model in any application. XState enables defining specific known possible "finite-states" (e.g. modes, statuses, behaviors) for any part of a system, how different events cause transitions between those states, and which actions (side-effects) are executed as a result. It has the ability to visualize state machines and their transitions graphically, and in real-time.
 
 ## Purpose and Use Cases
 
-TBD
+The purpose of XState is to express application logic, including states, transitions, and actions (effects) in a visually understandable way. This is accomplished by using statecharts (extended finite-state machines) and the actor model. Complex logic can be declaratively expressed with XState such that the implementation details for guards, actions, and invocations are configurable, making the created statecharts reusable for different use-cases, in different components, and even for different frameworks and languages.
+
+By making logic finite-state first instead of event-first and state transitions explicit, statecharts with XState prevents impossible states and transitions. It also eliminates the need for defensive logic, since implicit "handle the event this way _only if_ in this state" logic is instead a natural part of the state machine model.
+
+XState is primarily used for expressing complex logic, and has many use-cases:
+
+- Expressing status, such as for data fetching, processes, workflows
+- Declarative action (effect) orchestration with transitions
+- Component and application modes, and restricting which events will have an effect in certain modes
+- Multi-step forms and "wizards"
+- Chatbot-like applications
+- Multi-part async transformations
+- Model-based testing
+- Reusing logic in a highly configurable way
+- Autogenerating diagrams & documentation
+- Framework-independent logic
+- Game development
+- Prototyping logic (specifying implementation later)
+- Automation
+
 
 ## Tradeoffs
 
-TBD
+The main trade-off is the learning curve. To be highly productive with XState, it is good (but not completely necessary) to understand the concepts of:
+
+- Event-driven software
+- Finite-state machines
+- Statecharts
+- The actor model
+
+Expressing simpler state management logic in XState can sometimes be a little more verbose than using "direct-manipulation" techniques. This is because XState scales for complexity, and makes the trade-off of allowing highly complex app logic to be represented clearly and robustly rather than making general use-cases "easy".
+
+XState also eschews the idea of a single global atomic store, and instead encourages smaller "stores" (actors) that can communicate with each other. This allows it to be consistently used anywhere, from the component level to the "global" application level, but with the trade-off that communication needs to be coordinated with events, which can add some complexity.
 
 
 ## When Should I Consider Using This?
 
-TBD
+You should consider using XState once any part of your app reaches a point where deciphering the logic becomes hard to understand. Signs include:
+
+- Multiple lines of logic in event handlers
+- Multiple coordinated boolean variables for expressing some mode or status
+- Complicated if-statements with confusing predicates
+- Effects that are difficult to synchronize with state
+- Unhandled edge-cases
+- Impossible states present, or defensive logic for handling specific impossible states
+- Inability to clearly express what can happen at any point of time (events, states, transitions)
+- Difficulty in comprehensively testing logic, including effects
+- Rigid, "baked-in" logic that is difficult to share, reuse, or extract from app code
+- Necessity to document and/or diagram app logic without artifacts going stale
 
 
 ## Further Information
+
+- [XState GitHub repository](https://github.com/statelyai/xstate)
+- [📚 XState documentation](https://xstate.js.org/docs/)
+- [Stately visualizer](https://stately.ai/viz)
+- [Stately editor](https://stately.ai/editor)
