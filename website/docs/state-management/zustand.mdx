@@ -1,0 +1,31 @@
+---
+id: zustand
+title: "Zustand"
+sidebar_label: "Zustand"
+---
+
+## Description
+
+Zustand is a tiny library primarily designed to create module state for React. It's based on an immutable update model, in which state objects can't be modified but always have to be newly created. Render optimization is done manually using selectors. It has a straightforward and yet powerful store creator interface.
+
+## Purpose and Use Cases
+
+Zustand is a library that's used to create a store that holds a state. It's primarily designed for module state, which means you define this store in a module and export it. It's based on the immutable state model, in which you are not allowed to modify state object properties. Updating states must be done by creating new objects, while unmodified state objects must be reused. The benefit of the immutable state model is that you only need to check state object referential equality to know if there's any update; you don't have to check equality deeply.
+
+## Tradeoffs
+
+Zustand's render optimization with selector functions is also based on immutability – that is, if a selector function returns the same object referentially (or value), it assumes that the object is not changed and avoids re-rendering.
+
+having the same model as React gives us a huge benefit in terms of library simplicity and its small bundle size.
+
+On the other hand, a limitation of Zustand is its manual render optimization with selectors. It requires that we understand object referential equality and the code for selectors tends to require more boilerplate code.
+
+## When Should I Consider Using This?
+
+Zustand – or any other libraries with this approach – is a simple addition to the React principle. It's a good recommendation if you need a library with a small bundle size, if you are familiar with referential equality and memoization, or you prefer manual render optimization.
+
+## Further Information
+
+- [Zustand GitHub repository](https://github.com/pmndrs/zustand)
+- [📚 Micro State Management with React Hooks](https://www.amazon.com/Micro-State-Management-React-Hooks-dp-1801812373/dp/1801812373/ref=mt_other?_encoding=UTF8&me=&qid=1643728846)
+- [Zustand demo](https://zustand-demo.pmnd.rs/)
