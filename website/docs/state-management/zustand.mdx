@@ -4,6 +4,8 @@ title: "Zustand"
 sidebar_label: "Zustand"
 ---
 
+# Zustand
+
 ## Description
 
 Zustand is a tiny library primarily designed to create module state for React. It's based on an immutable update model, in which state objects can't be modified but always have to be newly created. Render optimization is done manually using selectors. It has a straightforward and yet powerful store creator interface.
@@ -24,8 +26,99 @@ On the other hand, a limitation of Zustand is its manual render optimization wit
 
 Zustand – or any other libraries with this approach – is a simple addition to the React principle. It's a good recommendation if you need a library with a small bundle size, if you are familiar with referential equality and memoization, or you prefer manual render optimization.
 
+# Jotai
+
+## Description
+
+Jotai is a small library for the global state. It's modeled after useState/useReducer and with what are called atoms, which are usually small pieces of state. Unlike Zustand, it is a component state, and like Zustand, it is an immutable update model.
+
+## Purpose and Use Cases
+
+Jotai's store is basically a `WeakMap` object of atom config objects and atom values. An atom config object is a definition created with the `atom` function. An atom value is a value that the `useAtom` hook returns. Subscription in Jotai is atom-based, which means the `useAtom` hook subscribes to a certain atom in `store`. Atom-based Subscription gives the ability to avoid extra re-renders.
+
+## Tradeoffs
+
+There are two benefits when using Jotai, as follows:
+
+### Syntax simplicity
+
+To understand syntax simplicity, let's look at the same counter example with Jotai. First, we need to import some functions from the Jotai library, as follows:
+
+```js
+import { atom, useAtom } from "jotai";
+```
+
+The `atom` function and the `useAtom` hook are basic functions provided by Jotai.
+
+An `atom` represents a piece of a state. An `atom` is usually a small piece of state, and it is a minimum unit of triggering re-renders. The `atom` function creates a definition of an atom. The `atom` function takes one argument to specify an initial value, just as `useState` does. The following code is used to define a new atom:
+
+```js
+const countAtom = atom(0);
+```
+
+Notice the similarity with `useState(0)`. `useAtom(countAtom)` returns the same tuple, `[count, setCount]`,
+as `useState(0)` does.
+
+### Dynamic atom creation
+
+The second benefit of Jotai is a new capability—that is, dynamic atom creation. Atoms can be created and destroyed in the React component lifecycle. This is not possible with the multiple-Context approach, because adding a new state means adding a new `Provider` component. If you add a new component, all its child components will be remounted, throwing away their states.
+
+## When Should I Consider Using This?
+
+My answer whould be to use jotai for component-centric apps.
+
+With the component-centric approach, you would design components first. Some states can be locally defined in components with useState. Other states will be shared across components. For example, in a GUI intensive app, you want to control UI parts in sync, but they are far away in the component tree.
+
+# Valtio
+
+## Description
+
+Valtio is yet another library for global state. Unlike Zustand and Jotai, it's based on the mutating update model. It's primarily for module states like Zustand. It utilizes proxies to get an immutable snapshot, which is required to integrate with React.
+
+## Purpose and Use Cases
+
+The API is just JavaScript and everything works behind the scenes. It also leverages proxies to automatically optimize re-renders. It doesn't require a selector to control re-renders. The automatic render optimization is based on a technique called state usage tracking. Using state usage tracking, it can detect which part of the state is used, and it can let a component re-render only if the used part of the state is changed. In the end, developers need to write less code.
+
+## Tradeoffs
+
+One big aspect is the mental model. We have two state-updating models. One is for immutable updates and the other for mutable updates. While JavaScript itself allows mutable updates, React is built around immutable states. Hence, if we mix the two models, we should be careful not to confuse ourselves. One possible solution would be to clearly separate the Valtio state and React state so that the mental model switch is reasonable. If it works, Valtio can fit in. Otherwise, maybe stick with immutable updates. The major benefit of mutable updates is we can use native JavaScript functions.
+
+On the other hand, a disadvantage of proxy-based render optimization can be less predictability. Proxies take care of render optimization behind the scenes and sometimes it's hard to debug the behavior. Some may prefer explicit selector-based hooks. In summary, there's no one-size-fits-all solution. It's up to developers to choose the solution that fits their needs.
+
+## When Should I Consider Using This?
+
+My answer whould be to use valtio for data-centric apps.
+
+The data-centric approach is you have data first regardless of React components. React components are used to represent those data. For example, in game development, it’s likely that you may have game state in advance to design components. You don’t want these data to be controlled by React lifecycle.
+
+# Comparing Zustand, Jotai, and Valtio
+
+First of all, all three libraries are provided by the Poimandres GitHub organization. It's a developer collective providing many libraries. Three micro-state management libraries from a single GitHub organization may sound counter-intuitive, but they are in different styles. There is also a philosophy that is common in the three libraries: their small API surfaces. All three libraries try their best to provide small API surfaces and let developers compose the APIs as they want.
+
+But then, what are the differences between the three libraries?
+
+There are two aspects:
+
+- **Where does the state reside?** In React, there are two approaches. One is the module state, and the other is the component state. A module state is a state that is created at the module level and doesn't belong to React. A component state is a state that is created in React component life cycles and controlled by React. Zustand and Valtio are designed for module states. On the other hand, Jotai is designed for component states. For example, consider Jotai atoms. The following is a definition of `countAtom`:
+
+```js
+const countAtom = atom(0);
+```
+
+- This `countAtom` variable holds a config object, and it doesn't hold a value. The atom values are stored in a `Provider` component. Hence, `countAtom` can be reused for multiple components. Implementing the same behavior is tricky with module states. With Zustand and Valtio, we would end up using React Context. On the other hand, accessing component states from outside React is technically not possible. We'll likely need some sort of module state to connect to the component states. Whether we use module states or component states depends on the app requirements. Usually, using either module states or component states for global states fulfills the app requirements, but in some rare cases, using both types of states may make sense.
+
+* **What is the state updating style?** There is a major difference between Zustand and Valtio. Zustand is based on the immutable state model, while Valtio is based on the mutable state model. The contract in the immutable state model is that objects cannot be changed once created. Suppose you have a state variable such as `state = { count: 0 }`. If you want to update the count in the immutable state model, you need to create a new object. Hence, incrementing the count by 1 should be `state = { count: state.count + 1 }`. In the mutable state mode, it could be `++state.count`. This is because JavaScript objects are mutable by nature. The benefit of the immutable model is that you can compare the object references to know whether anything has changed. It helps improve performance for large, nested objects. Because React is mostly based on the immutable model, Zustand with the same model has compatibility. Thus, Zustand is a very thin library. On the other hand, Valtio, with the mutable state model, requires filling the gap between the two models. In the end, Zustand and Valtio take different state updating styles. The mutable updating style is very handy, especially when an object is deeply nested.
+
+There are some minor differences among the three libraries, but what's important is the fact that they are based on different principles. If we were to choose one of them, we would need to see which principle fits well with our app requirements and our mental model.
+
 ## Further Information
 
-- [Zustand GitHub repository](https://github.com/pmndrs/zustand)
 - [📚 Micro State Management with React Hooks](https://www.amazon.com/Micro-State-Management-React-Hooks-dp-1801812373/dp/1801812373/ref=mt_other?_encoding=UTF8&me=&qid=1643728846)
+- [Zustand GitHub repository](https://github.com/pmndrs/zustand)
 - [Zustand demo](https://zustand-demo.pmnd.rs/)
+- [Jotai GitHub repository](https://github.com/pmndrs/jotai)
+- [📚 Jotai documentation](https://jotai.org/docs/introduction)
+- [Valtio demo](https://github.com/pmndrs/valtio)
+- [📚 Valtio documentation](https://valtio-demo.pmnd.rs/)
+- [When I Use Valtio and When I Use Jotai](https://blog.axlight.com/posts/when-i-use-valtio-and-when-i-use-jotai/)
+- [Daishi Kato's blog](https://blog.axlight.com/)
