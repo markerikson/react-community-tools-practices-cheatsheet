@@ -19,7 +19,7 @@ module.exports = {
           position: "right",
         },
         {
-          to: "/glossary/glossary",
+          to: "/glossary",
           label: "Glossary",
           position: "right",
         },
@@ -47,7 +47,7 @@ module.exports = {
             },
             {
               label: "Glossary",
-              to: "/glossary/glossary",
+              to: "/glossary",
             },
             {
               label: "Use Cases",
@@ -59,7 +59,7 @@ module.exports = {
             },
             {
               label: "How To",
-              to: "/how-to/how-to",
+              to: "/how-to",
             },
           ],
         },
