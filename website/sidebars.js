@@ -11,7 +11,15 @@ module.exports = {
       "state-management/xstate",
     ],
     "Data Fetching and Caching": ["data-fetching-caching/overview"],
-    Styling: ["styling/overview"],
+    Styling: [
+      "styling/overview",
+      "styling/plain-css",
+      "styling/css-preprocessors",
+      "styling/inline-styles",
+      "styling/css-modules",
+      "styling/styled-components",
+      "styling/emotion",
+    ],
     "Use Cases": [
       "use-cases/choosing-library-for-existing-project",
       "use-cases/starting-a-new-project",
