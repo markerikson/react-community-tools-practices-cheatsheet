@@ -2,3 +2,8 @@
   base    = "website"
   publish = "build"
   command = "yarn build && cp _redirects ./build"
+
+[build.environment]
+  NODE_VERSION = "16"
+  YARN_VERSION = "1.22.18"
+  YARN_FLAGS = "--immutable"
