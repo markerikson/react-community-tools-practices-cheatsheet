@@ -6,7 +6,7 @@ sidebar_label: "Plain CSS"
 
 ## Description
 
-Cascading Style Sheets (CSS) are _the_ styling technology of the web. All other styling techniques discussed on this site are built on top of CSS, with the possible exception of inline styles. This page covers "plain" CSS, i.e. CSS in the abscense of any preprocessing steps or JavaScript integration.
+Cascading Style Sheets (CSS) is _the_ styling technology of the web. All other styling techniques discussed on this site are built on top of CSS, with the possible exception of inline styles. This page covers "plain" CSS, i.e. CSS in the absence of any preprocessing steps or JavaScript integration.
 
 To start using CSS, create a file with the `.css` extension. Then, write a _selector_, which identifies one or more elements on the page, followed by the CSS _properties_ you would like to apply to those elements. For example, the CSS
 
@@ -23,13 +23,13 @@ would make every `<p>` element have red text and a `1.5rem` bottom margin.
 
 CSS is your primary tool for styling and positioning content on the web.
 
-The are two ways to bring CSS files into your React application. The most common option is to import the CSS file from your JavaScript
+The are two ways to bring CSS files into your React application. The most common option is to import the CSS file from your JavaScript:
 
 ```tsx
 import "./styles/app.css";
 ```
 
-though facility is provided by your bundle (e.g. Webpack) rather than the JavaScript language itself. The other, more traditional method of including CSS files is to add a `<link>` tag to the `<head>` of your HTML document:
+though this facility is provided by your bundler (e.g. Webpack) rather than the JavaScript language itself. The other, more traditional method of including CSS files is to add a `<link>` tag to the `<head>` of your HTML document:
 
 ```html
 <head>
@@ -39,11 +39,11 @@ though facility is provided by your bundle (e.g. Webpack) rather than the JavaSc
 
 ## Tradeoffs
 
-While CSS has become more powerful over time, for example with the introducion of CSS variables (a.k.a. custom properties), it is still somewhat limited compared the other technlogies discussed in this section of the site. Some specific drawbacks of plain CSS are:
+While CSS has become more powerful over time, e.g. with the introduction of CSS variables (a.k.a. custom properties), it is still somewhat limited compared the other technologies discussed in this section of the site. Some specific drawbacks of plain CSS are:
 
-- CSS is a fairly basic language. It does not have built-in support for advanced concepts like inheritance and mixins which can help reduce duplication.
-- React components and CSS rules are written in separate files. This can make it harder to keep track of which styles are for which components as your applicationg grows.
-- Styles are not scoped to particular React components, so it is easy to accidentally apply styles more broadly than you intended.
+- CSS is a fairly basic language. It does not have built-in support for advanced concepts like inheritance and mixins which can improve maintainability.
+- React components and CSS rules are written in separate files. This can make it harder to keep track of which styles are for which components as your application grows.
+- Styles are not scoped to particular React components, so it is easy to accidentally apply styles more broadly than intended.
 
 ## When Should I Consider Using This?
 
@@ -51,10 +51,10 @@ Plain CSS is an appropriate styling tool for virtually any website, though it's 
 
 - You are new to web development and want start with the basics.
 - You are working on a relatively small application where the drawbacks of CSS are less likely to be an issue.
-- You prefer to avoid complex build processes and want to start writing application code immediately.
+- You dislike complex build processes and want to start writing application code immediately.
 - Performance is critical. Plain CSS avoids the CPU overhead incurred by CSS-in-JS libraries.
 
 ## Further Information
 
 - The [MDN Web Docs](https://developer.mozilla.org/) provide extensive documentation on every CSS property.
-- [BEM](http://getbem.com/introduction/), a CSS methodology that helps keep things organized as a codebase grows.
+- [BEM](http://getbem.com/introduction/) is a CSS methodology that helps keep things organized as a codebase grows.
