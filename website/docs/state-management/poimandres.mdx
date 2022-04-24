@@ -14,7 +14,11 @@ Zustand is a tiny library primarily designed to create module state for React. I
 
 ## Purpose and Use Cases
 
-Zustand is a library that's used to create a store that holds a state. It's primarily designed for module state, which means you define this store in a module and export it. It's based on the immutable state model, in which you are not allowed to modify state object properties. Updating states must be done by creating new objects, while unmodified state objects must be reused. The benefit of the immutable state model is that you only need to check state object referential equality to know if there's any update; you don't have to check equality deeply.
+Zustand primarily designed for module state, which means you define this store in a module and export it.
+
+- Zustand is very small. So, it's good for a lightweight solution. For example, some apps use react-query for server state, and such apps only need a small global state. Zustand would be a best fit for such small use cases.
+- Immutable state model is the same as what React itself is based on. There would be less mental model switch between React state and zustand global state. So, it would be good for developers who are used to React's useState.
+- Unopinionated. The library has less restrictions, and very open. It's developers responsibility to organize well. It would be best if developers need flexibility with responsibility.
 
 ## Tradeoffs
 
@@ -36,7 +40,7 @@ Jotai is a small library for the global state. It's modeled after useState/useRe
 
 ## Purpose and Use Cases
 
-Jotai's store is basically a `WeakMap` object of atom config objects and atom values. An atom config object is a definition created with the `atom` function. An atom value is a value that the `useAtom` hook returns. Subscription in Jotai is atom-based, which means the `useAtom` hook subscribes to a certain atom in `store`. Atom-based Subscription gives the ability to avoid extra re-renders.
+The combination of Context and Subscription is the only way to have a React-oriented global state. If your requirement is Context without extra re-renders, this approach should be your choice.
 
 ## Tradeoffs
 
@@ -61,13 +65,17 @@ const countAtom = atom(0);
 Notice the similarity with `useState(0)`. `useAtom(countAtom)` returns the same tuple, `[count, setCount]`,
 as `useState(0)` does.
 
-### Dynamic atom creation
+### Non-global state
 
-The second benefit of Jotai is a new capability—that is, dynamic atom creation. Atoms can be created and destroyed in the React component lifecycle. This is not possible with the multiple-Context approach, because adding a new state means adding a new `Provider` component. If you add a new component, all its child components will be remounted, throwing away their states.
+The second benefit of Jotai is a new capability—that is, non-global state. Atoms can be created and destroyed in the React component lifecycle. This is not possible with the multiple-Context approach, because adding a new state means adding a new `Provider` component. If you add a new component, all its child components will be remounted, throwing away their states.
+
+### Derived atom
+
+The third benefit is derived atom. The atom function provided by library is very primitive, but it's also so flexible that you can combine multiple atoms to implement a functionality. Atoms are building block. By composing atoms based on other atoms, we can implement complicated logic. For example, we can create a new atom that is the sum of two other atoms.
 
 ## When Should I Consider Using This?
 
-My answer whould be to use jotai for component-centric apps.
+The answer would be to use jotai for component-centric apps.
 
 With the component-centric approach, you would design components first. Some states can be locally defined in components with useState. Other states will be shared across components. For example, in a GUI intensive app, you want to control UI parts in sync, but they are far away in the component tree.
 
@@ -89,7 +97,7 @@ On the other hand, a disadvantage of proxy-based render optimization can be less
 
 ## When Should I Consider Using This?
 
-My answer whould be to use valtio for data-centric apps.
+the answer would be to use valtio for data-centric apps.
 
 The data-centric approach is you have data first regardless of React components. React components are used to represent those data. For example, in game development, it’s likely that you may have game state in advance to design components. You don’t want these data to be controlled by React lifecycle.
 
