@@ -5,6 +5,7 @@ sidebar_label: "Poimandres"
 ---
 
 [Poimandres](https://github.com/pmndrs) is a developer collective and they host various OSS projects. Some of famous projects are [react-spring](https://github.com/pmndrs/react-spring) and [react-three-fiber](https://github.com/pmndrs/react-three-fiber). They also provide three popular state managers, namely [zustand](https://zustand-demo.pmnd.rs), [jotai](https://jotai.org), and [valtio](https://valtio.pmnd.rs). This document introduces those three state managers and discuss their features.
+Three micro-state management libraries from a single GitHub organization may sound counter-intuitive, but they are in different styles.
 
 # Zustand
 
@@ -32,6 +33,42 @@ On the other hand, a limitation of Zustand is its manual render optimization wit
 
 Zustand – or any other libraries with this approach – is a simple addition to the React principle. It's a good recommendation if you need a library with a small bundle size, if you are familiar with referential equality and memoization, or you prefer manual render optimization.
 
+## Example
+
+```tsx
+import create from "zustand";
+
+type Store = {
+  count: number;
+  unusedCount: number;
+  add: (n: number) => void;
+};
+
+const useStore = create<Store>((set) => ({
+  count: 0,
+  unusedCount: 0,
+  add: (n) => set((prev) => ({ count: prev.count + n })),
+}));
+
+const Counter = () => {
+  const count = useStore((state) => state.count);
+  const add = useStore((state) => state.add);
+  return (
+    <div>
+      {count} <button onClick={() => add(3)}>+3</button>
+    </div>
+  );
+};
+
+export default Counter;
+```
+
+## Differences between Zustand and Redux
+
+In some use cases, the developer experience can be similar in Zustand and Redux. Both are based on one-way data flow. In one-way data flow, we dispatch action, which represents a command to update a state, and after the state is updated with action, the new state is propagated to where it's needed.
+
+On the other hand, they differ in how to update states. Redux is based on reducers. While updating states with reducers is a strict method, it leads to more predictability. Zustand takes a flexible approach and it doesn't necessarily use reducers to update states.
+
 # Jotai
 
 ## Description
@@ -50,7 +87,7 @@ There are two benefits when using Jotai, as follows:
 
 To understand syntax simplicity, let's look at the same counter example with Jotai. First, we need to import some functions from the Jotai library, as follows:
 
-```js
+```jsx
 import { atom, useAtom } from "jotai";
 ```
 
@@ -58,7 +95,7 @@ The `atom` function and the `useAtom` hook are basic functions provided by Jotai
 
 An `atom` represents a piece of a state. An `atom` is usually a small piece of state, and it is a minimum unit of triggering re-renders. The `atom` function creates a definition of an atom. The `atom` function takes one argument to specify an initial value, just as `useState` does. The following code is used to define a new atom:
 
-```js
+```jsx
 const countAtom = atom(0);
 ```
 
@@ -78,6 +115,37 @@ The third benefit is derived atom. The atom function provided by library is very
 The answer would be to use jotai for component-centric apps.
 
 With the component-centric approach, you would design components first. Some states can be locally defined in components with useState. Other states will be shared across components. For example, in a GUI intensive app, you want to control UI parts in sync, but they are far away in the component tree.
+
+## Example
+
+```tsx
+import { atom, useAtom } from "jotai";
+
+const countAtom = atom(0);
+const addCountAtom = atom(null, (_get, set, n: number) => {
+  set(countAtom, (c) => c + n);
+});
+
+const Counter = () => {
+  const [count] = useAtom(countAtom);
+  const [, add] = useAtom(addCountAtom);
+  return (
+    <div>
+      {count} <button onClick={() => add(3)}>+3</button>
+    </div>
+  );
+};
+
+export default Counter;
+```
+
+## Differences between Recoil and Jotai
+
+Jotai's API is highly inspired by Recoil. In the beginning, it's intentionally designed to help migration from Recoil to Jotai. The differences are as follows:
+
+- The biggest difference is the existence of the key string. One of the big motivations of developing Jotai is to omit the key string which let to better DX. Naming is a hard task in coding, especially because the key property has to be unique.
+
+- Another difference of Jotai is the provider-less mode in Jotai, which allows omission of the Provider component, is technically simple, but very developer-friendly to lower the mental barrier as regards using the library.
 
 # Valtio
 
@@ -101,9 +169,41 @@ the answer would be to use valtio for data-centric apps.
 
 The data-centric approach is you have data first regardless of React components. React components are used to represent those data. For example, in game development, it’s likely that you may have game state in advance to design components. You don’t want these data to be controlled by React lifecycle.
 
+## Example
+
+```tsx
+import { proxy } from "valtio";
+import { useProxy } from "valtio/macro";
+
+const state = proxy({
+  count: 0,
+  unusedCount: 0,
+  add: (n: number) => {
+    state.count += n;
+  },
+});
+
+const Counter = () => {
+  useProxy(state);
+  return (
+    <div>
+      {state.count} <button onClick={() => state.add(3)}>+3</button>
+    </div>
+  );
+};
+
+export default Counter;
+```
+
+## Differences between Valtio and MobX
+
+Although the motivation is quite different, Valtio is often compared to [MobX](https://mobx.js.org). Usage-wise, there are some similarities in Valtio and MobX regarding their React binding. Both are based on mutable states and developers can directly mutate state, which results in similar usage. JavaScript is based on mutable objects, so the syntax of mutating an object is very natural and compact. This is a big win for mutable states compared to immutable states.
+
+On the other hand, there is a difference in how they optimize renders. For render optimization, while Valtio uses a hook, MobX React uses a higher-order component ([HoC](https://reactjs.org/docs/higher-order-components.html)).
+
 # Comparing Zustand, Jotai, and Valtio
 
-First of all, all three libraries are provided by the Poimandres GitHub organization. It's a developer collective providing many libraries. Three micro-state management libraries from a single GitHub organization may sound counter-intuitive, but they are in different styles. There is also a philosophy that is common in the three libraries: their small API surfaces. All three libraries try their best to provide small API surfaces and let developers compose the APIs as they want.
+There is a philosophy that is common in the three libraries: their small API surfaces. All three libraries try their best to provide small API surfaces and let developers compose the APIs as they want.
 
 But then, what are the differences between the three libraries?
 
@@ -111,7 +211,7 @@ There are two aspects:
 
 - **Where does the state reside?** In React, there are two approaches. One is the module state, and the other is the component state. A module state is a state that is created at the module level and doesn't belong to React. A component state is a state that is created in React component life cycles and controlled by React. Zustand and Valtio are designed for module states. On the other hand, Jotai is designed for component states. For example, consider Jotai atoms. The following is a definition of `countAtom`:
 
-```js
+```jsx
 const countAtom = atom(0);
 ```
 
