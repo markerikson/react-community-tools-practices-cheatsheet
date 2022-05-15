@@ -1,7 +1,7 @@
 ---
 id: xstate
-title: "XState"
-sidebar_label: "XState"
+title: 'XState'
+sidebar_label: 'XState'
 ---
 
 ## Description
@@ -12,7 +12,7 @@ XState is a state orchestration library for implementing finite-state machines, 
 
 The purpose of XState is to express application logic, including states, transitions, and actions (effects) in a visually understandable way. This is accomplished by using statecharts (extended finite-state machines) and the actor model. Complex logic can be declaratively expressed with XState such that the implementation details for guards, actions, and invocations are configurable, making the created statecharts reusable for different use-cases, in different components, and even for different frameworks and languages.
 
-By making logic finite-state first instead of event-first and state transitions explicit, statecharts with XState prevents impossible states and transitions. It also eliminates the need for defensive logic, since implicit "handle the event this way _only if_ in this state" logic is instead a natural part of the state machine model.
+By making logic finite-state first instead of event-first and state transitions explicit, statecharts with XState prevent impossible states and transitions. It also eliminates the need for defensive logic, since implicit "handle the event this way _only if_ in this state" logic is instead a natural part of the state machine model.
 
 XState is primarily used for expressing complex logic, and has many use-cases:
 
@@ -30,7 +30,6 @@ XState is primarily used for expressing complex logic, and has many use-cases:
 - Prototyping logic (specifying implementation later)
 - Automation
 
-
 ## Tradeoffs
 
 The main trade-off is the learning curve. To be highly productive with XState, it is good (but not completely necessary) to understand the concepts of:
@@ -43,7 +42,6 @@ The main trade-off is the learning curve. To be highly productive with XState, i
 Expressing simpler state management logic in XState can sometimes be a little more verbose than using "direct-manipulation" techniques. This is because XState scales for complexity, and makes the trade-off of allowing highly complex app logic to be represented clearly and robustly rather than making general use-cases "easy".
 
 XState also eschews the idea of a single global atomic store, and instead encourages smaller "stores" (actors) that can communicate with each other. This allows it to be consistently used anywhere, from the component level to the "global" application level, but with the trade-off that communication needs to be coordinated with events, which can add some complexity.
-
 
 ## When Should I Consider Using This?
 
@@ -59,7 +57,6 @@ You should consider using XState once any part of your app reaches a point where
 - Difficulty in comprehensively testing logic, including effects
 - Rigid, "baked-in" logic that is difficult to share, reuse, or extract from app code
 - Necessity to document and/or diagram app logic without artifacts going stale
-
 
 ## Further Information
 
