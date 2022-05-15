@@ -6,7 +6,7 @@ sidebar_label: "Plain CSS"
 
 ## Description
 
-Cascading Style Sheets (CSS) is _the_ styling technology of the web. All other styling techniques discussed on this site are built on top of CSS, with the possible exception of inline styles. This page covers "plain" CSS, i.e. CSS in the absence of any preprocessing steps or JavaScript integration.
+Cascading Style Sheets (CSS) is _the_ styling technology of the web. All other styling techniques discussed on this site are built on top of CSS, with the exception of inline styles (which are still heavily inspired by CSS. This page covers "plain" CSS, i.e. CSS without any preprocessing steps or JavaScript integration.
 
 To start using CSS, create a file with the `.css` extension. Then, write a _selector_, which identifies one or more elements on the page, followed by the CSS _properties_ you would like to apply to those elements. For example, the CSS
 
@@ -58,3 +58,67 @@ Plain CSS is an appropriate styling tool for virtually any website, though it's 
 
 - The [MDN Web Docs](https://developer.mozilla.org/) provide extensive documentation on every CSS property.
 - [BEM](http://getbem.com/introduction/) is a CSS methodology that helps keep things organized as a codebase grows.
+
+## Example
+
+This example shows how to create the following component using React and CSS.
+
+![A card component with a button](styling-example.png)
+
+Start by writing your React JSX as usual. Add `className` props to elements you wish to style — we'll use these class names in our CSS.
+
+```jsx title="Card.jsx"
+export function Card() {
+  return (
+    <div className="card">
+      <div className="card-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+      <button>OK</button>
+    </div>
+  );
+}
+```
+
+Now add a CSS file:
+
+```css title="styles.css"
+/* .card is a selector which targets all elements with className="card" */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-width: 200px;
+
+  /* There are multiple formats for defining colors in CSS. This rule uses
+   * rgba to make a black shadow that is nearly transparent. */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Target all `card-content` elements that are within a `card` */
+.card .card-content {
+  margin-bottom: 1rem;
+}
+
+/* Target all buttons, regardless of class name */
+button {
+  border: 0;
+  background-color: #0d6efd;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+/* Make the button darker when the user hovers over it */
+button:hover {
+  background-color: #025ce3;
+}
+```
+
+Finally, import the CSS file into one of your top-level React files. If you have a file called `App.jsx`, that's a good place for this!
+
+```jsx title="App.jsx"
+import "./styles.css";
+```
