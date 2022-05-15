@@ -9,6 +9,7 @@ module.exports = {
       "state-management/redux",
       "state-management/mobx",
       "state-management/xstate",
+      "state-management/poimandres"
     ],
     "Data Fetching and Caching": ["data-fetching-caching/overview"],
     "Use Cases": [
