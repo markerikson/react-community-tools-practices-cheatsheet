@@ -8,17 +8,15 @@ sidebar_label: "Redux"
 
 **Redux is a pattern and library for managing and updating application state, using events called "actions"**. It serves as a centralized store for state that needs to be used across your entire application, with rules ensuring that the state can only be updated in a predictable fashion.
 
-Redux focuses on making state updates predictable and traceable, with inspiration from the "Flux Architecture" pattern and Functional Programming principles.  It relies on separating descriptions of "what happened", called "actions", from the logic that decides how state should be updated, called "reducer functions".  Redux centralizes global application state into a single "store", and provides browser DevTools to view the history of state changes over time.
+Redux focuses on making state updates predictable and traceable, with inspiration from the "Flux Architecture" pattern and Functional Programming principles. It relies on separating descriptions of "what happened", called "actions", from the logic that decides how state should be updated, called "reducer functions". Redux centralizes global application state into a single "store", and provides browser DevTools to view the history of state changes over time.
 
 ## Purpose and Use Cases
 
-**The primary purpose of Redux is to help you manage "global" state** - state that is needed across many parts of your application.
+**The primary purpose of Redux is to help you manage "global" state** — state that is needed across many parts of your application.
 
 **The patterns and tools provided by Redux make it easier to understand when, where, why, and how the state in your application is being updated, and how your application logic will behave when those changes occur**. Redux guides you towards writing code that is predictable and testable, which helps give you confidence that your application will work as expected.
 
-Because any component can access data that is being kept in the Redux store, it _can_ be used to avoid "prop-drilling".  However, this is an added benefit, and not specifically the main reason to use Redux.
-
-
+Because any component can access data that is being kept in the Redux store, it _can_ be used to avoid "prop-drilling". However, this is an added benefit, and not specifically the main reason to use Redux.
 
 ## Tradeoffs
 
@@ -27,26 +25,25 @@ Redux asks you to write your code following specific patterns:
 - Application state should be described using plain JS objects and arrays
 - There must be a single Redux store that holds the application state
 - The store can only be updated by describing events that happen as plain "action" objects, and "dispatching" them to the store for processing
-- The logic for updating the store state must be written as "reducer" functions, which look at the current state and the action object to decide what the resulting new state should be.  Reducer functions must be "pure", with no side effects, and must calculate the new state using immutable updates.
+- The logic for updating the store state must be written as "reducer" functions, which look at the current state and the action object to decide what the resulting new state should be. Reducer functions must be "pure", with no side effects, and must calculate the new state using immutable updates.
 
-This adds a level of indirection to the process of managing state. Because of this, Redux is not intended to be the shortest or fastest way to update state.  
+This adds a level of indirection to the process of managing state. Because of this, Redux is not intended to be the shortest or fastest way to update state.
 
-However, the indirection of separating descriptions of "what happened" from the logic that determines "how the state should be updated" allows Redux to track how the state changed every time an action is dispatched.  The Redux DevTools can then display the history of dispatched actions, the diff between states, and the complete state tree after each dispatched action. This makes it easier to understand how the application behaves as things change.  This also enables Redux "middleware", which can inspect dispatched actions and run additional logic in response.
+However, the indirection of separating descriptions of "what happened" from the logic that determines "how the state should be updated" allows Redux to track how the state changed every time an action is dispatched. The Redux DevTools can then display the history of dispatched actions, the diff between states, and the complete state tree after each dispatched action. This makes it easier to understand how the application behaves as things change. This also enables Redux "middleware", which can inspect dispatched actions and run additional logic in response.
 
-Because Redux is a single store, all components that have subscribed to reading state updates have to re-run comparison checks after every dispatched action, to see if the data needed by that specific component has changed.  This does require that users carefully define how each component reads data from the Redux store, including use of "memoized" selector functions and semi-manual optimizations.  It also means that it's generally not a good idea to put most UI state values like "is this dropdown open?" or form state into the Redux store.
+Because Redux is a single store, all components that have subscribed to reading state updates have to re-run comparison checks after every dispatched action, to see if the data needed by that specific component has changed. This does require that users carefully define how each component reads data from the Redux store, including use of "memoized" selector functions and semi-manual optimizations. It also means that it's generally not a good idea to put most UI state values like "is this dropdown open?" or form state into the Redux store.
 
 Redux is UI-agnostic and can be used with any UI layer, including React, Angular, Vue, and vanilla JS.
 
 ## Packages
 
-The core [Redux](https://redux.js.org/) library provides a minimal set of APIs for creating a Redux store.  
+The core [Redux](https://redux.js.org/) library provides a minimal set of APIs for creating a Redux store.
 
 The official [Redux Toolkit](https://redux-toolkit.js.org) package adds additional APIs for standard Redux use cases like setting up a store with good defaults, catching common mistakes in development, and creating Redux reducers with simpler logic than writing immutable updates by hand.
 
 [React-Redux](https://react-redux.js.org) is the official bindings layer that lets React components interact with a Redux store by reading state values and dispatching actions.
 
 Redux has a thriving ecosystem of additional addons, including middleware for writing side effects and async logic with different syntaxes, tools for persisting store state, and much more.
-
 
 ## When Should I Consider Using This?
 
@@ -69,7 +66,6 @@ Redux helps you deal with shared state management, but there are more concepts t
 - You prefer writing logic that directly applies state updates with minimal indirection
 - Most of the data in your application is only needed by specific subsections of the component tree, with little "global" state
 - You want to stick with built-in React APIs and avoid additional third-party dependencies
-
 
 ## Further Information
 

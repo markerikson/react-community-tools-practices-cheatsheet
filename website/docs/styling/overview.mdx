@@ -1,0 +1,23 @@
+---
+id: overview
+title: "Styling: Overview"
+sidebar_label: "Styling: Overview"
+---
+
+Appropriate styling can make the difference between a bland, hard-to-use application and beautiful, intuitive application. Broadly speaking, styling a React application is no different from styling any other website. You write styles in CSS and target specific elements on the page using selectors like `h1` or `.navbar`. That said, there are many styling tools that provide additional features over vanilla CSS, such as compile-time variables and deep integration with React.
+
+This section of the website provides an overview of the most popular styling tools in the React ecosystem and when you should consider using each of them.
+
+## Overview of Styling Tools
+
+- **[Plain CSS](./plain-css.mdx):** Cascading Style Sheets (CSS) is the fundamental styling technology of the web. Plain CSS is the simplest way to style your React app and is the best starting point for those who want to learn frontend web development from the ground up.
+- **[CSS preprocessors](./css-preprocessors.mdx):** CSS preprocessors like Sass, LESS, and stylis enhance CSS with powerful features like variables, mixins, nesting, and inheritance. Your stylesheets must be compiled into normal CSS by the preprocessor before they can be served on the web.
+- **[Inline styles](./inline-styles.mdx):** Inline styles allow you to style individual JSX elements in your React code. While inline styles are the best method to apply CSS properties that vary dynamically (like the `transform` property of a draggable element), they are less powerful and performant than other styling solutions.
+- **[CSS Modules](./css-modules):** With CSS Modules, you can import a normal CSS file into your JavaScript code and attach class names defined in the CSS to specific React elements. One of the main benefits of CSS Modules is that your styles are scoped to individual React components, preventing issues where styles are unintentionally applied to an unrelated element. Despite the name, CSS Modules are not an official standard.
+- **CSS-in-JS libraries:** CSS-in-JS libraries allow you to write real CSS inside your JavaScript code. Most libraries allow you to write styles in CSS (as a string literal) or as a JavaScript object. Like CSS Modules, CSS-in-JS libraries support component-scoped CSS.
+  - **[styled-components](./styled-components.mdx):** styled-components is a React-specific library that enables you to define wrapper components that attach CSS to ordinary HTML elements and other components.
+  - **[Emotion](./emotion.mdx):** With Emotion, you can choose between three different approaches to styling. The `css` prop from `@emotion/react` and the `styled` function from `@emotion/styled` are the most ergonomic when working with React. The `css` prop enables you to write real CSS in a method similar to inline styles, while `styled` is largely equivalent to the styled-components library.
+
+## Further Information
+
+- The [MDN Web Docs](https://developer.mozilla.org/) provide extensive documentation on every CSS property.
