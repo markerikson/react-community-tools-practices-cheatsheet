@@ -29,7 +29,7 @@ const daysUntilBirthday = getDaysUntilBirthday(dateOfBirth);
 
 We can call `getAgeInYears` and `getDaysUntilBirthday` on each render. We know we will have the latest value for `dateOfBirth`, removing the need for the `useEffect`. We avoid any potential bugs related by deriving the state directly. We also don't need to write any synchronization code.
 
-You might be wondering, "What if it's very costly to calculate these derived state values? Won't this cause performance issues in my component?" which is a valid concern. However, in most cases, the values can be derived quickly, which won't impact performance. If you know a calculation will be costly or see performance issues; you can use the `useMemo` hook to run the calculations only when `dateOfBirth` updates.
+You might be wondering, "What if it's very costly to calculate these derived state values? Won't this cause performance issues in my component?" which is a valid concern. However, in most cases, the values can be derived quickly, which won't impact performance. If you know a calculation will be costly or see performance issues, you can use the `useMemo` hook to run the calculations only when `dateOfBirth` updates.
 
 ```js
 const [dateOfBirth, setDateOBirth] = useState(null);
