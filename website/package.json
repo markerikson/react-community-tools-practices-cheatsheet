@@ -6,13 +6,15 @@
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear"
+    "clear": "docusaurus clear",
+    "prettier": "prettier ."
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.18",
-    "@docusaurus/preset-classic": "2.0.0-beta.18",
+    "@docusaurus/core": "2.0.0-beta.20",
+    "@docusaurus/preset-classic": "2.0.0-beta.20",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
+    "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
