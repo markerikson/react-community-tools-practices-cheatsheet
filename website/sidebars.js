@@ -1,6 +1,6 @@
 module.exports = {
   docs: {
-    'Common Mistakes': ['common-mistakes/mistake1'],
+    'Common Mistakes': ['common-mistakes/common-mistakes'],
     Glossary: ['glossary/glossary'],
     'How To': ['how-to/how-to'],
     'State Management': [

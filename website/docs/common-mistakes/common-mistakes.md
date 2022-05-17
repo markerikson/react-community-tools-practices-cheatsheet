@@ -1,5 +1,5 @@
 ---
-id: mistake1
+id: common-mistakes
 title: Common Mistakes
 sidebar_label: Common Mistakes
 ---

@@ -68,7 +68,7 @@ function Home() {
                 'button button--outline button--secondary button--lg',
                 styles.getStarted
               )}
-              to={useBaseUrl('/common-mistakes/mistake1')}
+              to={useBaseUrl('/common-mistakes')}
             >
               Get Started
             </Link>
