@@ -14,7 +14,7 @@ module.exports = {
       },
       items: [
         {
-          to: '/common-mistakes/mistake1',
+          to: '/common-mistakes',
           label: 'Common Mistakes',
           position: 'right',
         },
@@ -43,7 +43,7 @@ module.exports = {
           items: [
             {
               label: 'Common Mistakes',
-              to: '/common-mistakes/mistake1',
+              to: '/common-mistakes',
             },
             {
               label: 'Glossary',
