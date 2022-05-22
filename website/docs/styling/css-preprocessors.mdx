@@ -6,18 +6,150 @@ sidebar_label: 'CSS Preprocessors'
 
 ## Description
 
-TBD
+CSS preprocessors extend the CSS language with powerful features like compile-time variables, nesting, inheritance, and mixins. The CSS preprocessor transforms these language extensions into plain CSS during your build step. The main CSS preprocessors are
+
+- [Sass](https://sass-lang.com/)
+- [LESS](https://lesscss.org/)
+- [stylus](https://stylus-lang.com/)
+
+with Sass being the most popular.
+
+The advanced language features provided by CSS preprocessors enable you to write cleaner code with less duplication. Here's an example from the [Sass documentation](https://sass-lang.com/guide) that shows how mixins can keep your code [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself):
+
+```scss title="styles.scss"
+@mixin theme($theme: DarkGray) {
+  background: $theme;
+  box-shadow: 0 0 1px rgba($theme, 0.25);
+  color: #fff;
+}
+
+.info {
+  @include theme;
+}
+.alert {
+  @include theme($theme: DarkRed);
+}
+.success {
+  @include theme($theme: DarkGreen);
+}
+```
+
+Sass will compile the above code to the following plain CSS:
+
+```css title="styles.css"
+.info {
+  background: DarkGray;
+  box-shadow: 0 0 1px rgba(169, 169, 169, 0.25);
+  color: #fff;
+}
+
+.alert {
+  background: DarkRed;
+  box-shadow: 0 0 1px rgba(139, 0, 0, 0.25);
+  color: #fff;
+}
+
+.success {
+  background: DarkGreen;
+  box-shadow: 0 0 1px rgba(0, 100, 0, 0.25);
+  color: #fff;
+}
+```
 
 ## Purpose and Use Cases
 
-TBD
+The Sass, LESS, and stylus languages can be viewed as replacements for plain CSS. Once you have added a CSS preprocessor to your build tooling, there is virtually no reason to write plain CSS, since CSS preprocessors support all features of plain CSS while adding advanced compile-time utilities.
+
+In practical terms, the primary advantages of CSS preprocessors over plain CSS are:
+
+1. Reduced duplication of styles thanks to mixins and inheritance.
+2. Greater control over the scoping of styles thanks to nested selectors.
+3. More powerful variables, color functions, and module systems.
 
 ## Tradeoffs
 
-TBD
+- To use a CSS preprocessor, you generally need to install additional packages and add code to your bundler's configuration file (e.g. `webpack.config.js`). This step is not necessary when using a preconfigured build system like Create React App or Next.js that has built-in support for Sass.
+- Since CSS preprocessors are just syntactic sugar over plain CSS, they suffer from some of the same drawbacks:
+  - React components and CSS rules are written in separate files. This can make it harder to keep track of which styles are for which components as your application grows.
+  - Styles are not scoped to particular React components, so it is easy to accidentally apply styles more broadly than intended.
+- Plain CSS is slowly adding features that were traditionally only available through use of a preprocessor. [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) are supported by all major browsers and nested selectors have been proposed in a [W3C draft](https://www.w3.org/TR/css-nesting-1/).
+- Unlike CSS-in-JS libraries, CSS preprocessor code does not integrate with JavaScript. This can make it so you have to define common constants (e.g. colors) in both your stylesheets and JavaScript.
 
 ## When Should I Consider Using This?
 
-TBD
+- You like plain CSS but wish it had more advanced compile-time features.
+- You are experiencing code duplication and scoping issues in your plain CSS code.
+- You are using [CSS Modules](css-modules.mdx). Sass can be used [in conjunction with CSS Modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) in Create React App.
 
 ## Further Information
+
+The best way to learn more about CSS preprocessors is to view their official documentation:
+
+- [Sass](https://sass-lang.com/)
+- [LESS](https://lesscss.org/)
+- [stylus](https://stylus-lang.com/)
+
+## Example
+
+This example shows how to create the following component using React and Sass.
+
+![A card component with a button](styling-example.png)
+
+Start by writing your React JSX as usual. Add `className` props to elements you wish to style — we'll use these class names in our Sass. You'll notice that this code is the exact same as what we wrote in the example on the [plain CSS page](plain-css.mdx).
+
+```jsx title="Card.jsx"
+export function Card() {
+  return (
+    <div className="card">
+      <div className="card-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+      <button>OK</button>
+    </div>
+  );
+}
+```
+
+Now add a Sass file. Use the `.scss` file extension to indicate that we're using the modern SCSS syntax:
+
+```scss title="styles.scss"
+// Define some variables that we can use throughout our app
+$primary: #0d6efd;
+$border-color: #ccc;
+$box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+.card {
+  border: 1px solid $border-color;
+  box-shadow: $box-shadow;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-width: 200px;
+
+  // This is a nested selector. It only applies to card-content within a card
+  .card-content {
+    margin-bottom: 1rem;
+  }
+}
+
+button {
+  border: 0;
+  background-color: $primary;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 100%;
+
+  // In a nested selector, an ampersand (&) refers to the parent selector
+  &:hover {
+    // Sass provides functions to manipulate colors
+    background-color: darken($primary, 7%);
+  }
+}
+```
+
+Finally, import the Sass file into one of your top-level React files. If you have a file called `App.jsx`, that's a good place for this!
+
+```jsx title="App.jsx"
+import './styles.scss';
+```
