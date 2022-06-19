@@ -86,3 +86,58 @@ CSS Modules can be seen as a middle ground between plain CSS and a full-fledged 
 
 - [CSS Module](https://github.com/css-modules/css-modules)
 - [How to configure CSS Modules for Webpack](https://blog.logrocket.com/how-to-configure-css-modules-webpack/)
+
+## Example
+
+This example shows how to create the following component using React and CSS Modules.
+
+![A card component with a button](styling-example.png)
+
+In your `.jsx` file, import from the `.module.css` file, which we'll add in a bit. Then write the JSX code and use the `styles` object when setting the `className` for each element.
+
+```jsx title="Card.jsx"
+import styles from './Card.module.css';
+
+export function Card() {
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardContent}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+      <button>OK</button>
+    </div>
+  );
+}
+```
+
+Next, we add the CSS Module:
+
+```css title="Card.module.css"
+.card {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-width: 200px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card .cardContent {
+  margin-bottom: 1rem;
+}
+
+button {
+  border: 0;
+  background-color: #0d6efd;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #025ce3;
+}
+```
+
+And that's it! If properly configured, your bundler will transform the class names in the CSS Module so that your styles are locally scoped.
