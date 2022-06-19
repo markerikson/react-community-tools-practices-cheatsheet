@@ -6,18 +6,83 @@ sidebar_label: 'CSS Modules'
 
 ## Description
 
-TBD
+A [CSS Module](https://github.com/css-modules/css-modules) is a CSS file where class names are locally scoped. Though the name may make CSS Modules sound like an official spec that extends the CSS language, this is not the case — CSS Modules were invented by members of the community and must be compiled to normal CSS before being served on the web.
+
+To begin using CSS Modules, create a file with the `.module.css` extension and add a class name selector:
+
+```css title="App.module.css"
+.appContainer {
+  background-color: #fafafa;
+  font-family: sans-serif;
+}
+```
+
+Then import the CSS module in your JavaScript code and attach the class name to an element:
+
+```jsx title="App.jsx"
+import styles from './App.module.css';
+
+export function App() {
+  return <div className={styles.appContainer}>Content here</div>;
+}
+```
+
+Some things to note about the above example:
+
+- We used a camelCase class name — camel case is preferable when using CSS Modules since the class names need to be accessed from JavaScript.
+- The CSS Module for `App.jsx` is called `App.module.css`. This is a common pattern when using CSS Modules: for each `[component].jsx`, you create a `[component].module.css` file that contains the styles for that component.
 
 ## Purpose and Use Cases
 
-TBD
+A common pitfall when using plain CSS (with or without a preprocessor) is that same class name may be accidentally used for two different purposes. For example, imagine `page1.css` defines styles for an error alert like this:
+
+```css title="page1.css"
+.error {
+  display: block;
+  padding: 1rem;
+  background-color: #faf38f;
+  border-color: 1px solid red;
+  font-weight: bold;
+}
+```
+
+You are working on page 2 and wish to add a small bottom margin to an error label. If you don't remember that `.error` styles are also defined in `page1.css`, you may accidentally reuse the `error` class name and write something like this:
+
+```css title="page2.css"
+.error {
+  margin-bottom: 0.5rem;
+}
+```
+
+If `page1.css` and `page2.css` are compiled into a single CSS bundle which is included in the `<head>` of your single page app's HTML, page 2's simple error label will end up with a large padding, a background color, and a border, since these styles were defined in `page1.css`. That isn't what we wanted! We really want `page1.css` to only apply to page 1, and `page2.css` to only apply to page 2.
+
+CSS Modules fixes this problem by making all class names locally scoped. It does this by transforming your class names at build time. In the example above, the module loader would transform the class names like this:
+
+```text
+error (from page1.css) ➙ _src_page1_module__error
+error (from page2.css) ➙ _src_page2_module__error
+```
+
+While the exact transformation algorithm used may vary, the end result is the same: there will never be a collision between two CSS classes defined in different files.
 
 ## Tradeoffs
 
-TBD
+There are no major tradeoffs when using CSS Modules instead of plain CSS, though you need to make sure you are using a bundler which supports CSS Modules. CSS Modules are supported out of the box when using Webpack's `css-loader`, Create React App, or Next.js.
+
+CSS Modules are potentially less convenient than plain CSS if you _want_ to attach styles to the same class name in different files. You can achieve this behavior by using the `:global` directive as described [here](https://github.com/css-modules/css-modules#exceptions).
+
+CSS Modules can be seen as a middle ground between plain CSS and a full-fledged CSS-in-JS library. Like plain CSS, CSS Modules have no runtime overhead since they are transformed to plain CSS at compile time. Like CSS-in-JS libraries, CSS Modules offer locally-scoped styles. That said, CSS-in-JS provides tighter integration between your CSS and JavaScript code:
+
+- With CSS-in-JS, you can define a React component and its styles in a single `.jsx` file, whereas with CSS Modules, you need both a `.jsx` file and a `.module.css` file.
+- Styles defined in via CSS-in-JS have full access to JavaScript variables (e.g. color constants), while CSS Modules do not.
 
 ## When Should I Consider Using This?
 
-TBD
+- You are working on a medium or large application, since class name collisions are more likely to occur in larger codebases.
+- You want locally-scoped class names, without the larger bundle size and runtime performance costs that come with using a CSS-in-JS library.
+- You are using a CSS preprocessor like Sass. Preprocessors and CSS modules can be used together.
 
 ## Further Information
+
+- [CSS Module](https://github.com/css-modules/css-modules)
+- [How to configure CSS Modules for Webpack](https://blog.logrocket.com/how-to-configure-css-modules-webpack/)
