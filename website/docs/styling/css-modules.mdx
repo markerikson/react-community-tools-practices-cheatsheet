@@ -65,6 +65,21 @@ error (from page2.css) ➙ _src_page2_module__error
 
 While the exact transformation algorithm used may vary, the end result is the same: there will never be a collision between two CSS classes defined in different files.
 
+When you import a CSS Module from a JavaScript file, you get an object which maps the human-readable class names to transformed class names. For example, this code,
+
+```js
+import styles from 'page1.module.css';
+console.log(styles);
+```
+
+will print
+
+```text
+{ error: '_src_page1_module__error' }
+```
+
+to the console.
+
 ## Tradeoffs
 
 There are no major tradeoffs when using CSS Modules instead of plain CSS, though you need to make sure you are using a bundler which supports CSS Modules. CSS Modules are supported out of the box when using Webpack's `css-loader`, Create React App, or Next.js.
